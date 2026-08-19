@@ -32,3 +32,6 @@ yarn-error.log*
 
 # local crawl artefacts
 /internal_all.csv
+
+# local agent settings
+/.claude/settings.local.json
