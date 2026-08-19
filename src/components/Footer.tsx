@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-slate-900 text-slate-300">
       <div className="bg-white py-4 border-b">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4">
-          <Image src="/images/espa.jpg" alt="ΕΣΠΑ" width={500} height={70} className="h-14 md:h-16 w-auto object-contain" />
+          <Image src="https://www.kotsistravel.gr/images/espa.jpg" alt="ΕΣΠΑ" width={500} height={70} className="h-14 md:h-16 w-auto object-contain" unoptimized />
           <p className="text-slate-700 text-sm text-center">Με τη συγχρηματοδότηση της Ελλάδας και της Ευρωπαϊκής Ένωσης</p>
         </div>
       </div>
