@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -X utf8 build_redirects.py)",
+      "Bash(python3 -X utf8 -)"
+    ]
+  }
+}
