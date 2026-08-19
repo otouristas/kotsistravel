@@ -2,5 +2,305 @@
 @tailwind components;
 @tailwind utilities;
 
-html { scroll-behavior: smooth; }
-body { color: #0f172a; background: #f8fafc; }
+/* ------------------------------------------------------------------
+   KOTSIS TRAVEL — design tokens
+
+   Derived from the original logo, decoded pixel-exact:
+     blue  #3667B2  (49.9% of the mark)
+     red   #ED2024  (29.2% of the mark)
+
+   The raw pair is a hot 2005-era corporate combo, so the system keeps
+   both hues but rebuilds them into a scale: navy carries the surfaces,
+   the logo blue becomes the brand accent, and the red is reserved for
+   action — buttons, prices, live indicators.
+   ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    /* Navy surface scale, tuned from the logo blue's hue (216°). */
+    --navy-950: 8 20 38; /* #081426 */
+    --navy-900: 12 30 56; /* #0C1E38 */
+    --navy-800: 18 44 79; /* #122C4F */
+    --navy-700: 27 63 110; /* #1B3F6E */
+
+    /* Brand blue — 500 is the logo value, untouched. */
+    --brand-700: 33 76 137; /* #214C89 */
+    --brand-600: 44 86 149; /* #2C5695 */
+    --brand: 54 103 178; /* #3667B2  ← logo */
+    --brand-400: 92 139 209; /* #5C8BD1 */
+    --brand-300: 138 175 227; /* #8AAFE3 */
+    --brand-100: 219 231 247; /* #DBE7F7 */
+
+    /* Action red — 500 is the logo value, 600 is the accessible button tone. */
+    --accent-700: 158 22 26; /* #9E161A */
+    --accent-600: 200 27 32; /* #C81B20 */
+    --accent: 224 32 37; /* #E02025 */
+    --accent-400: 237 32 36; /* #ED2024  ← logo */
+    --accent-100: 253 226 227; /* #FDE2E3 */
+
+    /* Neutrals — a hint of blue keeps them in the same family. */
+    --paper: 249 250 252; /* #F9FAFC */
+    --paper-2: 240 243 248; /* #F0F3F8 */
+    --ink: 15 25 41; /* #0F1929 */
+    --ink-soft: 84 98 118; /* #546276 */
+    --rule: 220 227 238; /* #DCE3EE */
+
+    --shadow-card: 0 1px 2px rgb(8 20 38 / 0.05), 0 12px 28px -12px rgb(8 20 38 / 0.18);
+    --shadow-lift: 0 2px 4px rgb(8 20 38 / 0.06), 0 28px 50px -20px rgb(8 20 38 / 0.28);
+  }
+
+  * {
+    border-color: rgb(var(--rule));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html,
+  body {
+    /* Nothing on this site is meant to scroll sideways. */
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  body {
+    background: rgb(var(--paper));
+    color: rgb(var(--ink));
+    font-feature-settings: "kern", "liga", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Inter needs negative tracking to hold together at display sizes,
+     and Greek caps need a touch more room than Latin. */
+  h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    letter-spacing: -0.022em;
+  }
+
+  ::selection {
+    background: rgb(var(--brand) / 0.22);
+    color: rgb(var(--navy-950));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--brand));
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-[76rem] px-5 sm:px-8;
+  }
+  .shell-wide {
+    @apply mx-auto w-full max-w-[88rem] px-5 sm:px-8;
+  }
+
+  /* Small blue eyebrow above section titles. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-[0.7rem] font-bold uppercase tracking-[0.18em];
+    color: rgb(var(--brand-600));
+  }
+  .eyebrow::before {
+    content: "";
+    @apply block h-px w-8;
+    background: rgb(var(--brand) / 0.5);
+  }
+  .eyebrow-center::before {
+    display: none;
+  }
+  .eyebrow-dark {
+    color: rgb(var(--brand-300));
+  }
+  .eyebrow-dark::before {
+    background: rgb(var(--brand-300) / 0.5);
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold
+           transition-all duration-300 ease-out;
+  }
+  .btn-primary {
+    background: rgb(var(--accent-600));
+    color: #fff;
+    box-shadow: 0 10px 22px -10px rgb(var(--accent-600) / 0.7);
+  }
+  .btn-primary:hover {
+    background: rgb(var(--accent-700));
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px -12px rgb(var(--accent-700) / 0.8);
+  }
+  .btn-brand {
+    background: rgb(var(--brand));
+    color: #fff;
+  }
+  .btn-brand:hover {
+    background: rgb(var(--brand-600));
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    @apply border;
+    border-color: rgb(255 255 255 / 0.28);
+    color: rgb(var(--paper));
+  }
+  .btn-ghost:hover {
+    background: rgb(255 255 255 / 0.1);
+    border-color: rgb(255 255 255 / 0.55);
+  }
+  .btn-ink {
+    @apply border;
+    border-color: rgb(var(--ink) / 0.16);
+    color: rgb(var(--ink));
+  }
+  .btn-ink:hover {
+    background: rgb(var(--ink));
+    color: #fff;
+    border-color: rgb(var(--ink));
+  }
+
+  .card {
+    @apply relative overflow-hidden rounded-xl border bg-white transition-all duration-500 ease-out;
+    border-color: rgb(var(--rule));
+    box-shadow: var(--shadow-card);
+  }
+  .card:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-3px);
+    border-color: rgb(var(--brand) / 0.45);
+  }
+
+  /* Legacy photos top out at 600px wide — never upscale past their native size. */
+  .photo {
+    @apply block h-full w-full object-cover;
+  }
+
+  .prose-kotsis {
+    @apply text-[1.0313rem] leading-[1.8];
+    color: rgb(var(--ink-soft));
+  }
+  .prose-kotsis strong {
+    color: rgb(var(--ink));
+    font-weight: 600;
+  }
+
+  /* Marketing pill used in nav and cards. */
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.08em];
+  }
+  .pill-accent {
+    background: rgb(var(--accent) / 0.12);
+    color: rgb(var(--accent-600));
+  }
+  .pill-brand {
+    background: rgb(var(--brand) / 0.12);
+    color: rgb(var(--brand-600));
+  }
+  .pill-dark {
+    background: rgb(255 255 255 / 0.1);
+    color: rgb(var(--brand-300));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Fine grain — keeps the large flat navy fields from banding. */
+  .grain::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: 0.12;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Google Translate widget neutralisation.
+   The widget injects a fixed banner and pushes <body> down by 40px, which
+   breaks the sticky header. We drive translation from our own flag buttons,
+   so the banner and its skeleton are hidden and the offset is reverted.
+   ------------------------------------------------------------------ */
+.skiptranslate,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+  position: static !important;
+}
+/* Google wraps translated runs in <font>; keep them inheriting our type. */
+font {
+  font: inherit !important;
+  color: inherit !important;
+  background: none !important;
+}
+
+/* Scroll-triggered reveal.
+   Gated behind html.js so that without JavaScript — or before hydration —
+   every section is simply visible rather than stuck at opacity 0. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.js .reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

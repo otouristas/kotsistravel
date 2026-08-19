@@ -1,16 +1,54 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-export const metadata: Metadata = { title: "Κρουαζιέρες", description: "Κρουαζιέρες Μεσογείου, Καραϊβικής, Βόρειας Ευρώπης και εξωτικές." };
-export default function Page() {
+import PageHero, { AnchorNav, ContactStrip } from "@/components/PageHero";
+import Catalog from "@/components/Catalog";
+import { byCategory } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Κρουαζιέρες",
+  description:
+    "Κρουαζιέρες σε Καραϊβική, Αλάσκα, Βαλτική και νορβηγικά φιόρδ. Πρακτορεύσεις κρουαζιερόπλοιων και έντυπα των μεγαλύτερων εταιρειών.",
+};
+
+export default function KrouazieresPage() {
+  const cruises = byCategory("cruises");
+  const brochures = byCategory("cruise-brochures");
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12 md:py-16">
-      <nav className="text-sm text-slate-500 mb-6"><Link href="/" className="hover:text-blue-600">Αρχική</Link> / <span className="text-slate-900">Κρουαζιέρες</span></nav>
-      <h1 className="text-4xl font-bold mb-6">Κρουαζιέρες</h1>
-      <div className="bg-white rounded-2xl border p-8 shadow-sm">
-        <p className="text-slate-600 leading-relaxed mb-6">Κρουαζιέρες Μεσογείου, Καραϊβικής, Βόρειας Ευρώπης και εξωτικές διαδρομές. Συνεργασία με μεγάλες εταιρείες κρουαζιέρας.</p>
-        <p className="text-slate-600 mb-8">Καλέστε: <a href="tel:+302665023053" className="text-blue-600 font-semibold">+30 26650 23053</a></p>
-        <Link href="/contact" className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition">Επικοινωνία</Link>
-      </div>
-    </div>
+    <>
+      <PageHero
+        eyebrow="Θαλάσσιος τουρισμός"
+        title="Κρουαζιέρες σε πέντε θάλασσες"
+        lede="Αναλαμβάνουμε κρατήσεις πολυήμερων κρουαζιέρων σε όλους τους προορισμούς, καθώς και την ενοικίαση πολυτελών σκαφών. Είμαστε πρακτορείο κρουαζιερόπλοιων με πρόσβαση στους καταλόγους όλων των μεγάλων εταιρειών."
+        crumbs={[{ label: "Κρουαζιέρες" }]}
+        image={cruises[0]?.image}
+      />
+      <AnchorNav
+        items={[
+          { label: "Προορισμοί", href: "#proorismoi", count: cruises.length },
+          { label: "Έντυπα κρουαζιέρας", href: "#entypa", count: brochures.length },
+        ]}
+      />
+      <Catalog
+        id="proorismoi"
+        eyebrow="Προορισμοί"
+        title="Πού μπορείτε να ταξιδέψετε"
+        lede="Από τους παγετώνες της Αλάσκας και τον ήλιο του μεσονυκτίου στα νορβηγικά φιόρδ, μέχρι την Ανατολική και Δυτική Καραϊβική."
+        items={cruises}
+      />
+      <Catalog
+        id="entypa"
+        eyebrow="Κατάλογοι"
+        title="Έντυπα κρουαζιέρας"
+        lede="Τα επίσημα έντυπα των συνεργαζόμενων εταιρειών, όπως τα κρατάμε στο αρχείο του γραφείου."
+        items={brochures}
+        layout="rows"
+        columns={2}
+        tone="white"
+      />
+      <ContactStrip
+        title="Ας βρούμε την κρουαζιέρα σας"
+        body="Πείτε μας περίοδο, διάρκεια και προορισμό — θα σας στείλουμε διαθέσιμες αναχωρήσεις και καμπίνες."
+      />
+    </>
   );
 }
