@@ -30,7 +30,7 @@ export default function Header() {
       </div>
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/images/logo.png" alt="Kotsis Travel" width={150} height={48} className="h-11 w-auto object-contain" priority />
+          <Image src="https://www.kotsistravel.gr/images/LOGO5.png" alt="Kotsis Travel" width={150} height={48} className="h-11 w-auto object-contain" priority unoptimized />
         </Link>
         <nav className="hidden lg:flex gap-1">
           {navItems.map(i => (
